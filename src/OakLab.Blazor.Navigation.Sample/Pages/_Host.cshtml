@@ -1,0 +1,21 @@
+﻿@page "/"
+@namespace OakLab.Blazor.Navigation.Sample.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OakLab.Blazor.Navigation</title>
+    <base href="~/" />
+    <link href="SapphireSoft.Blazor.Navigation.styles.css" rel="stylesheet" />
+</head>
+<body>
+    <component type="typeof(App)" render-mode="ServerPrerendered" />
+    <script src="_framework/blazor.server.js"></script>
+</body>
+</html>

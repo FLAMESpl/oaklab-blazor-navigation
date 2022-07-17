@@ -1,0 +1,21 @@
+﻿@using Pages;
+
+<button @onclick="() => Navigation.NavigateTo(new Page1Route())">Page 1</button>
+<button @onclick="() => Navigation.NavigateTo<Page2>()">Page 2</button>
+<button @onclick="() => Navigation.NavigateTo(new Page3Route(page3RouteParameter, page3QueryParameter))">
+    Page 3 using route object
+</button>
+
+<label for="route">Route parameter</label>
+<input id="route" type="text" @bind="page3RouteParameter"/>
+<label for="query">Query parameter</label>
+<input id="query" type="number" @bind="page3QueryParameter"/>
+
+@code {
+    [Inject]
+    private NavigationManager Navigation { get; set; }
+
+    private string page3RouteParameter;
+    private int? page3QueryParameter;
+    private const string page3QueryParameterName = nameof(Page3Route.QueryParameter);
+}
