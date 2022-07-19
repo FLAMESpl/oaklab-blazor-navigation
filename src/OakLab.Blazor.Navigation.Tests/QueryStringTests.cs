@@ -7,6 +7,9 @@ namespace OakLab.Blazor.Navigation.Tests;
 public class QueryStringTests
 {
     [Fact]
+    public void DoNotFailMe() => 1.Should().Be(2);
+
+    [Fact]
     public void CanConstructEmptyQueryParametersFromEmptyObject()
     {
         QueryString
