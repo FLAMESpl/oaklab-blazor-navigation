@@ -5,6 +5,19 @@
     <Nullable>enable</Nullable>
     <WarningsAsErrors>Nullable</WarningsAsErrors>
     <PackageVersion>0.1.0</PackageVersion>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Title>OakLab Blazor Navigation Extensions</Title>
+    <Authors>Łukasz Szafirski</Authors>
+    <Description>Extensions for Blazor that allows navigation in more strong-typed manner without overriding default routing system.</Description>
+    <Copyright>© 2020 Łukasz Szafirski</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/FLAMESpl/oaklab-blazor-navigation</RepositoryUrl>
+    <PackageTags>blazor navigation oaklab extensions</PackageTags>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <Company>OakLab</Company>
+    <AssemblyVersion>0.1.0</AssemblyVersion>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <WarningsAsErrors>1591</WarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>
