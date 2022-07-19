@@ -1,5 +1,7 @@
 # Blazor Navigation
 
+![Build](https://github.com/FLAMESpl/oaklab-blazor-navigation/actions/workflows/pull-request-and-merge.yml/badge.svg)
+
 Get rid of magic url strings and navigate to page classes.
 
 ```csharp
