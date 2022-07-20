@@ -1,27 +1,47 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
+  <PropertyGroup Label="General">
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <WarningsAsErrors>Nullable</WarningsAsErrors>
-    <PackageVersion>0.1.0</PackageVersion>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Title>OakLab Blazor Navigation Extensions</Title>
-    <Authors>Łukasz Szafirski</Authors>
-    <Description>Extensions for Blazor that allows navigation in more strong-typed manner without overriding default routing system.</Description>
-    <Copyright>© 2020 Łukasz Szafirski</Copyright>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <RepositoryUrl>https://github.com/FLAMESpl/oaklab-blazor-navigation</RepositoryUrl>
-    <PackageTags>blazor navigation oaklab extensions</PackageTags>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <Company>OakLab</Company>
-    <AssemblyVersion>0.1.0</AssemblyVersion>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <WarningsAsErrors>1591</WarningsAsErrors>
   </PropertyGroup>
 
+  <PropertyGroup Label="Package Build">
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Package Metadata">
+    <PackageVersion>0.1.0</PackageVersion>
+    <AssemblyVersion>0.1.0</AssemblyVersion>
+    <Title>OakLab Blazor Navigation Extensions</Title>
+    <Authors>Łukasz Szafirski</Authors>
+    <Description>Extensions for Blazor that allows navigation in more strong-typed manner without overriding default routing system.</Description>
+    <Copyright>© 2022 Łukasz Szafirski</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/FLAMESpl/oaklab-blazor-navigation</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>blazor navigation oaklab extensions</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <Company>OakLab</Company>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'RELEASE'">
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+  </PropertyGroup>
+
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components" Version="6.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Components" Version="6.*" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
 </Project>

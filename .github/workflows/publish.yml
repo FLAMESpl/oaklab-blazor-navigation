@@ -1,0 +1,25 @@
+name: Build
+
+on:
+  release:
+    types: [published]
+
+env:
+  PROJECT_DIRECTORY: ./src/OakLab.Blazor.Navigation/bin/Release
+  NUGET_SOURCE: https://api.nuget.org/v3/index.json
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    environment: Nuget.org
+
+    steps:
+    - name: Build
+      uses: ./.github/workflows/my-action/build.yml
+    - name: Checkout directory
+    - run: cd $PROJECT_DIRECTORY
+    - name: Push dll
+      run: dotnet nuget push "*.nupkg" --api-key ${{ secrets.NUGET_ORG_API_KEY }} --source $NUGET_SOURCE
+    - name: Push symbols
+      run: dotnet nuget push "*.snupkg" --symbol-api-key ${{ secrets.NUGET_ORG_API_KEY }} --source $NUGET_SOURCE
