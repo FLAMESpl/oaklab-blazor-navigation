@@ -21,7 +21,7 @@ jobs:
     steps:
     - uses: actions/download-artifact@master
       with:
-        name: build_$GITHUB_SHA
+        name: build_${{ github.sha }}
         path: build
     - name: Checkout directory
       run: cd build
