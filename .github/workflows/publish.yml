@@ -25,6 +25,8 @@ jobs:
         path: build
     - name: Checkout directory
       run: cd build
+    - name: List directory
+      run: ls
     - name: Push dll
       run: dotnet nuget push "*.nupkg" --api-key ${{ secrets.NUGET_ORG_API_KEY }} --source $NUGET_SOURCE
     - name: Push symbols
