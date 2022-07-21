@@ -2,7 +2,7 @@ name: Build
 
 on: workflow_call
 
-evn:
+env:
   BUILD_DIRECTORY: ./src/OakLab.Blazor.Navigation/bin/Release
 
 jobs:
