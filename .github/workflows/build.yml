@@ -1,6 +1,12 @@
 name: Build
 
-on: workflow_call
+on: 
+  workflow_call:
+    inputs:
+      upload_artifact:
+        required: false
+        default: false
+        type: boolean
 
 env:
   BUILD_DIRECTORY: ./src/OakLab.Blazor.Navigation/bin/Release
@@ -22,7 +28,8 @@ jobs:
       run: dotnet build --no-restore -c RELEASE
     - name: Test
       run: dotnet test --no-build --verbosity normal -c RELEASE
-    - uses: actions/upload-artifact@master
+    - if: ${{ inputs.upload_artifact }}
+      uses: actions/upload-artifact@master
       with:
-        name: build_${{ env.GITHUB_SHA }}
+        name: build_${{ github.sha }}
         path: ${{ env.BUILD_DIRECTORY }}

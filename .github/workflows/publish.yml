@@ -10,6 +10,8 @@ env:
 jobs:
   build:
     uses: ./.github/workflows/build.yml
+    with: 
+      publish_artifact: true
 
   publish:
     runs-on: ubuntu-latest
@@ -19,7 +21,7 @@ jobs:
     steps:
     - uses: actions/download-artifact@master
       with:
-        name: build_${{ env.GITHUB_SHA }}
+        name: build_$GITHUB_SHA
         path: build
     - name: Checkout directory
       run: cd build
