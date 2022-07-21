@@ -11,4 +11,4 @@ jobs:
 
     steps:
     - name: Build
-      uses: uses: ./.github/workflows/my-action/build.yml
+      uses: ./.github/workflows/build.yml

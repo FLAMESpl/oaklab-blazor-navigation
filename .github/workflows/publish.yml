@@ -16,9 +16,9 @@ jobs:
 
     steps:
     - name: Build
-      uses: ./.github/workflows/my-action/build.yml
+      uses: ./.github/workflows/build.yml
     - name: Checkout directory
-    - run: cd $PROJECT_DIRECTORY
+      run: cd $PROJECT_DIRECTORY
     - name: Push dll
       run: dotnet nuget push "*.nupkg" --api-key ${{ secrets.NUGET_ORG_API_KEY }} --source $NUGET_SOURCE
     - name: Push symbols
