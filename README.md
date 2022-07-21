@@ -1,7 +1,7 @@
 # Blazor Navigation
 
 ![Build](https://github.com/FLAMESpl/oaklab-blazor-navigation/actions/workflows/master-build.yml/badge.svg)
-![Nuget](https://img.shields.io/nuget/v/OakLab.Blazor.navigation.svg?style=flat-round&label=nuget)
+[![Nuget](https://img.shields.io/nuget/v/OakLab.Blazor.navigation.svg?style=flat&label=nuget)](https://www.nuget.org/packages/OakLab.Blazor.Navigation)
 
 Get rid of magic url strings and navigate to page classes.
 
