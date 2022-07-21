@@ -25,4 +25,4 @@ jobs:
     - uses: actions/upload-artifact@master
       with:
         name: build_$GITHUB_SHA
-        path: $BUILD_DIRECTORY
+        path: ${{ env.BUILD_DIRECTORY }}
