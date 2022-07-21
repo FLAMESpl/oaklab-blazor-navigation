@@ -1,6 +1,6 @@
 # Blazor Navigation
 
-![Build](https://github.com/FLAMESpl/oaklab-blazor-navigation/actions/workflows/build.yml/badge.svg)
+![Build](https://github.com/FLAMESpl/oaklab-blazor-navigation/actions/workflows/master-build.yml/badge.svg)
 
 Get rid of magic url strings and navigate to page classes.
 

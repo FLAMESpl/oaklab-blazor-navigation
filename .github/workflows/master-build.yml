@@ -1,0 +1,14 @@
+name: Master build
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Build
+      uses: uses: ./.github/workflows/my-action/build.yml
