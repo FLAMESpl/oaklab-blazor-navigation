@@ -23,11 +23,5 @@ jobs:
       with:
         name: build_${{ github.sha }}
         path: build
-    - name: Push dll
+    - name: Push
       run: dotnet nuget push "build/*.nupkg" --api-key ${{ secrets.NUGET_ORG_API_KEY }} --source $NUGET_SOURCE
-    - name: Push symbols
-      run: dotnet nuget push "build/*.snupkg" --symbol-api-key ${{ secrets.NUGET_ORG_API_KEY }} --source $NUGET_SOURCE
-
-    
-
-
