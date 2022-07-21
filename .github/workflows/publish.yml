@@ -23,14 +23,10 @@ jobs:
       with:
         name: build_${{ github.sha }}
         path: build
-    - name: Checkout directory
-      run: cd build
-    - name: List directory
-      run: ls
     - name: Push dll
-      run: dotnet nuget push "*.nupkg" --api-key ${{ secrets.NUGET_ORG_API_KEY }} --source $NUGET_SOURCE
+      run: dotnet nuget push "build/*.nupkg" --api-key ${{ secrets.NUGET_ORG_API_KEY }} --source $NUGET_SOURCE
     - name: Push symbols
-      run: dotnet nuget push "*.snupkg" --symbol-api-key ${{ secrets.NUGET_ORG_API_KEY }} --source $NUGET_SOURCE
+      run: dotnet nuget push "build/*.snupkg" --symbol-api-key ${{ secrets.NUGET_ORG_API_KEY }} --source $NUGET_SOURCE
 
     
 
