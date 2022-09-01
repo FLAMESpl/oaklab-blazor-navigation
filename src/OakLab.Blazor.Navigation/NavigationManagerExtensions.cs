@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using System;
+using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Reflection;
 
 namespace OakLab.Blazor.Navigation;
 
@@ -113,6 +116,37 @@ public static class NavigationManagerExtensions
         var queryString = GetQueryString(queryParameters);
         var uri = RouteTemplate<T>.Get().Construct(parameters.Select(x => x.ToStringOrEmpty()).ToList(), queryString);
         navigationManager.NavigateTo(uri, forceLoad);
+    }
+
+    /// <summary>
+    /// Binds current uri to <see cref="Route{T}"/> implementation.
+    /// Binding uses parameterless constructor and property setters.
+    /// </summary>
+    /// <param name="navigationManager">Instance of <see cref="NavigationManager"/>.</param>
+    /// <typeparam name="TRoute">Implementation of <see cref="Route{T}"/> to be constructed.</typeparam>
+    /// <returns>Instance of <typeparamref name="TRoute"/> with bound parameters.</returns>
+    public static TRoute GetCurrentRoute<TRoute>(this NavigationManager navigationManager) where TRoute : IRoute
+    {
+        TRoute route;
+
+        try
+        {
+            route = (TRoute)Activator.CreateInstance(
+                type: typeof(TRoute),
+                bindingAttr: BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic,
+                binder: null,
+                args: Array.Empty<object>(),
+                culture: CultureInfo.InvariantCulture)!;
+        }
+        catch (MissingMethodException exception)
+        {
+            throw new RouteConstructionException(
+                "Cannot bind parameters to route. Route object does not have parameterless constructor.",
+                exception);
+        }
+
+        route.SetParameters(new Uri(navigationManager.Uri));
+        return route;
     }
 
     private static string GetQueryString(object? parameters)

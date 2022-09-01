@@ -3,8 +3,7 @@
   <PropertyGroup Label="General">
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
-    <WarningsAsErrors>Nullable</WarningsAsErrors>
-    <WarningsAsErrors>1591</WarningsAsErrors>
+    <WarningsAsErrors>Nullable,1591</WarningsAsErrors>
   </PropertyGroup>
 
   <PropertyGroup Label="Package Build">
@@ -16,8 +15,8 @@
   </PropertyGroup>
 
   <PropertyGroup Label="Package Metadata">
-    <PackageVersion>0.1.0</PackageVersion>
-    <AssemblyVersion>0.1.0</AssemblyVersion>
+    <PackageVersion>0.2.0</PackageVersion>
+    <AssemblyVersion>0.2.0</AssemblyVersion>
     <Title>OakLab Blazor Navigation Extensions</Title>
     <Authors>Łukasz Szafirski</Authors>
     <Description>Extensions for Blazor that allows navigation in more strong-typed manner without overriding default routing system.</Description>
@@ -28,8 +27,8 @@
     <PackageTags>blazor navigation oaklab extensions</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-	<PackageIconUrl>https://i.imgur.com/jzhEh2y.png</PackageIconUrl>
-	<PackageIcon>package-icon.png</PackageIcon>
+    <PackageIconUrl>https://i.imgur.com/jzhEh2y.png</PackageIconUrl>
+    <PackageIcon>package-icon.png</PackageIcon>
     <Company>OakLab</Company>
   </PropertyGroup>
 
@@ -38,7 +37,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components" Version="6.*" />
+    <PackageReference Include="Microsoft.AspNetCore.Components" Version="6.0.0" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

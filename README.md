@@ -93,8 +93,12 @@ class CommentsRoute : Route<CommentsPage>
 ```
 
 In this scenario `BlogName` and `PostId` will be bound to route parameters where `PageSize` and `PageNumber` to query parameters.
-Type of properties generally doesn't matter, there is only `.ToString()` invoked on them to construct a route,
-or in case it implements `IFormattable` then `.ToString(null, CultureInfo.InvariantCulture)`.
+
+Route objects can also work the other way around. `GetCurrentRoute<TRoute>()` extension method on `NavigationManager` allows to get route with properties bound
+to current location. Binding can be customized by overriding `SetParameters(Uri)` method on route object. Use `GetRouteParametersFromUri(Uri)` and
+`GetQueryParametersFromUri(Uri)` to extract parameters from uri in text format.
+
+In order to convert objects to text and otherwise type converter for this type is used. Conversion is culture invariant.
 
 To prevent property from binding annotate it with `[RouteIgnore]` attribute.
 

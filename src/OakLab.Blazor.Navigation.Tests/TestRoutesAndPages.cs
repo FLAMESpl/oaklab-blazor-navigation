@@ -23,9 +23,13 @@ public class TestRouteWithParametersBoundByConvention : Route<TestPageWithParame
     public int QueryParameter { get; set; }
 }
 
-public class TestRouteWithoutParametersBoundByConvention : Route<TestPageWithoutParameters>
+public class TestRouteWithoutRouteParametersBoundByConvention : Route<TestPageWithoutParameters>
 {
-    public int? QueryParameter { get; set; }
+    public int? QueryParameter1 { get; set; }
+    public float? QueryParameter2 { get; set; }
+    public decimal? QueryParameter3 { get; set; }
+    public Guid? QueryParameter4 { get; set; }
+    public bool? QueryParameter5 { get; set; }
 }
 
 public class TestRouteWithoutAnyParametersBoundByConvention : Route<TestPageWithoutParameters>

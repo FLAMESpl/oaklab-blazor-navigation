@@ -10,4 +10,8 @@ public class RouteConstructionException : Exception
     internal RouteConstructionException(string message) : base(message)
     {
     }
+
+    internal RouteConstructionException(string message, Exception innerException) : base(message, innerException)
+    {
+    }
 }

@@ -3,43 +3,58 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
+using Microsoft.Extensions.Primitives;
 
 namespace OakLab.Blazor.Navigation;
 
 internal class RouteTemplate
 {
-    private readonly IReadOnlyList<string> templateTokens;
-
+    internal string RawString { get; }
+    internal IReadOnlyList<string> NonParameterTokens { get; }
     internal IReadOnlyList<string> ParameterNames { get; }
 
     public RouteTemplate(string template)
     {
-        (templateTokens, ParameterNames) = ParseTemplate(template);
+        RawString = template;
+        (NonParameterTokens, ParameterNames) = ParseTemplate(template);
     }
 
     public string Construct(
         IReadOnlyList<string> parameters,
         string queryString)
     {
-        if (parameters.Count != templateTokens.Count && parameters.Count + 1 != templateTokens.Count)
+        if (parameters.Count != NonParameterTokens.Count && parameters.Count + 1 != NonParameterTokens.Count)
             throw new RouteConstructionException("Input parameters count does not match one in route template.");
 
         var builder = new StringBuilder();
+        var firstToken = NonParameterTokens[0];
 
-        for (var i = 0; i < templateTokens.Count; i++)
+        // remove trailing '/' unless it is root token with single '/' character
+        if (NonParameterTokens.Count != 1 || firstToken != "/")
         {
-            builder.Append(templateTokens[i]);
+            for (var i = 0; i < NonParameterTokens.Count; i++)
+            {
+                var token = NonParameterTokens[i];
 
-            if (parameters.Count > i)
-                builder.Append(parameters[i]);
+                builder.Append(NonParameterTokens.Count - 1 == i
+                    ? token[..^1]
+                    : token);
+
+                if (parameters.Count > i)
+                    builder.Append(parameters[i]);
+            }
+        }
+        else
+        {
+            builder.Append(firstToken);
         }
 
         return builder.Append(queryString).ToString();
     }
 
-    private static (IReadOnlyList<string> Tokens, IReadOnlyList<string> Parameters) ParseTemplate(
-        string template)
+    private static (IReadOnlyList<string> Tokens, IReadOnlyList<string> Parameters) ParseTemplate(string template)
     {
+        template = template.NormalizePath();
         var tokens = new List<string>();
         var parameterNames = new List<string>();
         var previousPosition = 0;
@@ -62,13 +77,15 @@ internal class RouteTemplate
                 : template.IndexOf('{', previousPosition);
         }
 
-        tokens.Add(template[previousPosition..]);
+        var lastToken = template[previousPosition..];
+        if (!string.IsNullOrEmpty(lastToken))
+            tokens.Add(lastToken);
 
         return (tokens, parameterNames);
     }
 }
 
-internal class RouteTemplate<T>
+internal static class RouteTemplate<T>
 {
     private static readonly RouteTemplate? instance;
 

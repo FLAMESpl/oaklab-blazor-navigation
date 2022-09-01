@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -52,10 +51,7 @@ internal static class QueryString
         if (string.IsNullOrWhiteSpace(pair.Key))
             throw new InvalidOperationException("Parameter name cannot be empty.");
 
-        var value = pair.Value is IFormattable formattable
-            ? formattable.ToString(null, CultureInfo.InvariantCulture)
-            : pair.Value.ToString();
-
+        var value = TypeDescriptor.GetConverter(pair.Value.GetType()).ConvertToInvariantString(pair.Value);
         builder.Append(pair.Key).Append('=').Append(HttpUtility.UrlEncode(value));
     }
 }

@@ -8,30 +8,30 @@ namespace OakLab.Blazor.Navigation;
 
 internal class RouteDefinition<TPage> where TPage : ComponentBase
 {
-    private readonly IReadOnlyList<PropertyInfo> routeProperties;
-    private readonly IReadOnlyCollection<PropertyInfo> queryProperties;
+    public IReadOnlyList<PropertyInfo> RouteProperties { get; }
+    public IReadOnlyCollection<PropertyInfo> QueryProperties { get; }
+    public RouteTemplate Template => RouteTemplate<TPage>.Get();
 
     public RouteDefinition(Type routeType)
     {
-        var template = RouteTemplate<TPage>.Get();
         var properties = routeType
             .GetProperties()
             .Where(p => p.GetCustomAttribute<RouteIgnoreAttribute>() is null)
             .ToDictionary(p => p.Name);
 
-        routeProperties = template.ParameterNames
+        RouteProperties = Template.ParameterNames
             .Select(name => properties.GetValueOrDefault(name))
             .Where(p => p is not null)
             .ToList()!;
 
-        queryProperties = properties.Values.Where(p => !template.ParameterNames.Contains(p.Name)).ToList();
+        QueryProperties = properties.Values.Where(p => !Template.ParameterNames.Contains(p.Name)).ToList();
     }
 
     public IEnumerable<object> GetRouteParametersFrom(Route<TPage> route) =>
-        routeProperties.Select(x => x.GetValue(route))!;
+        RouteProperties.Select(x => x.GetValue(route))!;
 
     public IEnumerable<KeyValuePair<string, object>> GetQueryParametersFrom(Route<TPage> route) =>
-        QueryString.GetQueryStringParametersFrom(route, queryProperties);
+        QueryString.GetQueryStringParametersFrom(route, QueryProperties);
 
     public static RouteDefinition<TPage> Get(Type routeType) => (RouteDefinition<TPage>) typeof(RouteDefinitionCache<,>)
         .MakeGenericType(typeof(TPage), routeType)
