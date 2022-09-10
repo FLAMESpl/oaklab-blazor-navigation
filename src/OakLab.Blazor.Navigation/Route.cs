@@ -119,10 +119,7 @@ public abstract class Route<T> : IRoute where T : ComponentBase
                 value = null;
             }
 
-            if (value is not null)
-            {
-                queryProperty.SetValue(this, value);
-            }
+            queryProperty.SetValue(this, value ?? queryProperty.PropertyType.GetDefaultValue());
         }
     }
 
@@ -144,19 +141,20 @@ public abstract class Route<T> : IRoute where T : ComponentBase
 
         for (var i = 0; i < nonParameterTokens.Count; i++)
         {
+            var moreParametersAhead = definedParameters.Count > i;
             var templateToken = nonParameterTokens[i];
-            var pathTokenEnd = path.IndexOf('/', currentPosition);
-            var pathToken = pathTokenEnd > 0
-                ? path[currentPosition..pathTokenEnd]
+            var pathTokenEnd = path.IndexOf('/', currentPosition + 1);
+            var pathToken = pathTokenEnd > 0 && moreParametersAhead
+                ? path[currentPosition..(pathTokenEnd + 1)]
                 : path[currentPosition..];
 
-            if (!pathToken.Equals(templateToken, StringComparison.OrdinalIgnoreCase))
+            if (!pathToken.Equals(templateToken.Value, StringComparison.OrdinalIgnoreCase))
                 throw GetPathNotMatchingTemplateException(path);
 
-            if (definedParameters.Count <= i)
+            if (!moreParametersAhead)
                 break;
 
-            var parameterStart = currentPosition + templateToken.Length;
+            var parameterStart = currentPosition + templateToken.Value.Length;
 
             if (nonParameterTokens.Count - 1 == i)
             {

@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.1
+
+* Fixed parameters missing in query string not binding as defaults when setting parameters for existing route.
+* Fixed issues with template mismatch when setting route's parameters.
+
 ## 0.2.0
 
 * Changed method of type conversion of parameters to type converters obtained from type's descriptor.

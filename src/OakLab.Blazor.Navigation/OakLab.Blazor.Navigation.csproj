@@ -15,8 +15,8 @@
   </PropertyGroup>
 
   <PropertyGroup Label="Package Metadata">
-    <PackageVersion>0.2.0</PackageVersion>
-    <AssemblyVersion>0.2.0</AssemblyVersion>
+    <PackageVersion>0.2.1</PackageVersion>
+    <AssemblyVersion>0.2.1</AssemblyVersion>
     <Title>OakLab Blazor Navigation Extensions</Title>
     <Authors>Łukasz Szafirski</Authors>
     <Description>Extensions for Blazor that allows navigation in more strong-typed manner without overriding default routing system.</Description>

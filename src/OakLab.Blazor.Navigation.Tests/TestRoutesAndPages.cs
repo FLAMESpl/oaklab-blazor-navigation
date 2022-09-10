@@ -30,6 +30,7 @@ public class TestRouteWithoutRouteParametersBoundByConvention : Route<TestPageWi
     public decimal? QueryParameter3 { get; set; }
     public Guid? QueryParameter4 { get; set; }
     public bool? QueryParameter5 { get; set; }
+    public string? QueryParameter6 { get; set; }
 }
 
 public class TestRouteWithoutAnyParametersBoundByConvention : Route<TestPageWithoutParameters>

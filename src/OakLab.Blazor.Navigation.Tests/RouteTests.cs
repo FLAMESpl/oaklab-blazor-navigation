@@ -111,10 +111,13 @@ public class RouteTests
     [InlineData(typeof(TestRouteWithoutRouteParametersBoundByConvention), "https://www.example.com/pag")]
     [InlineData(typeof(TestRouteWithoutRouteParametersBoundByConvention), "https://www.example.com/pag/")]
     [InlineData(typeof(TestRouteWithoutRouteParametersBoundByConvention), "https://www.example.com/pagee")]
+    [InlineData(typeof(TestRouteWithoutRouteParametersBoundByConvention), "https://www.example.com/page/p")]
+    [InlineData(typeof(TestRouteWithoutRouteParametersBoundByConvention), "https://www.example.com/page/p/")]
     [InlineData(typeof(TestRouteWithoutRouteParametersBoundByConvention), "https://www.example.com/page/param")]
     [InlineData(typeof(TestRouteWithParametersBoundByConvention), "https://www.example.com/page")]
     [InlineData(typeof(TestRouteWithParametersBoundByConvention), "https://www.example.com/5e5ba5cf-210b-435d-9e72-c67c3ce8e778/something/param")]
     [InlineData(typeof(TestRouteWithParametersBoundByConvention), "https://www.example.com/page/5e5ba5cf-210b-435d-9e72-c67c3ce8e778/something")]
+    [InlineData(typeof(TestRouteWithParametersBoundByConvention), "https://www.example.com/page/5e5ba5cf-210b-435d-9e72-c67c3ce8e778/something/param/more")]
     [InlineData(typeof(TestRouteWithParametersBoundByConvention), "https://www.example.com/page/5e5ba5cf-210b-435d-9e72-c67c3ce8e778/something2/param")]
     public void IfPathDoesNotMatchTemplateWhenBindingRouteThenRouteConstructionExceptionIsThrown(
         Type routeType,
@@ -128,5 +131,22 @@ public class RouteTests
             .Should()
             .Throw<RouteConstructionException>()
             .Where(x => x.Message.Contains("does not match page's template"));
+    }
+
+    [Fact]
+    public void SettingPropertiesForUriWithoutParametersToAlreadyInitializedObjectOverwritesExistingValueWithDefault()
+    {
+        var route = new TestRouteWithParametersBoundByConvention { QueryParameter = 10 };
+        route.SetParameters(new Uri("https://www.example.com/page/353E21D2-F7AD-44E0-B214-869E52228465/something/test"));
+        route.QueryParameter.Should().Be(0);
+    }
+
+    [Fact]
+    public void SettingPropertiesForUriWithoutParametersToAlreadyInitializedObjectOverwritesExistingValueWithNull()
+    {
+        var route = new TestRouteWithoutRouteParametersBoundByConvention { QueryParameter1 = 10, QueryParameter6 = "x" };
+        route.SetParameters(new Uri("https://www.example.com/page"));
+        route.QueryParameter1.Should().BeNull();
+        route.QueryParameter6.Should().BeNull();
     }
 }

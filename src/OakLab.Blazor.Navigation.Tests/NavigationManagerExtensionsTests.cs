@@ -204,4 +204,17 @@ public class NavigationManagerExtensionsTests
             .Throw<RouteConstructionException>()
             .Where(x => x.Message.Contains("Cannot convert value"));
     }
+
+    [Fact]
+    public void CanGetCurrentRouteThatHasRouteParameters()
+    {
+        var navigation = new TestNavigationManager(
+            "https://www.example.com/page/fbd466ec97f749cc9895a34d75aea991/something/test");
+
+        var route = navigation.GetCurrentRoute<TestRouteWithParametersBoundByConvention>();
+
+        route.Parameter1.Should().Be("fbd466ec97f749cc9895a34d75aea991");
+        route.Parameter2.Should().Be("test");
+        route.QueryParameter.Should().Be(0);
+    }
 }

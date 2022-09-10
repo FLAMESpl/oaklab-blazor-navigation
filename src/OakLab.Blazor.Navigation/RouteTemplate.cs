@@ -1,16 +1,21 @@
 ﻿using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Text;
-using Microsoft.Extensions.Primitives;
 
 namespace OakLab.Blazor.Navigation;
 
 internal class RouteTemplate
 {
     internal string RawString { get; }
-    internal IReadOnlyList<string> NonParameterTokens { get; }
+
+    /// <summary>
+    /// Tokens always starts and ends with '/' character. If token has no length then it is single '/'.
+    /// Has at least one element.
+    /// </summary>
+    internal IReadOnlyList<RouteTemplateToken> NonParameterTokens { get; }
     internal IReadOnlyList<string> ParameterNames { get; }
 
     public RouteTemplate(string template)
@@ -30,14 +35,14 @@ internal class RouteTemplate
         var firstToken = NonParameterTokens[0];
 
         // remove trailing '/' unless it is root token with single '/' character
-        if (NonParameterTokens.Count != 1 || firstToken != "/")
+        if (NonParameterTokens.Count != 1 || firstToken.Value != "/")
         {
             for (var i = 0; i < NonParameterTokens.Count; i++)
             {
                 var token = NonParameterTokens[i];
 
                 builder.Append(NonParameterTokens.Count - 1 == i
-                    ? token[..^1]
+                    ? token.Value[..^1]
                     : token);
 
                 if (parameters.Count > i)
@@ -52,7 +57,7 @@ internal class RouteTemplate
         return builder.Append(queryString).ToString();
     }
 
-    private static (IReadOnlyList<string> Tokens, IReadOnlyList<string> Parameters) ParseTemplate(string template)
+    private static (IReadOnlyList<RouteTemplateToken> Tokens, IReadOnlyList<string> Parameters) ParseTemplate(string template)
     {
         template = template.NormalizePath();
         var tokens = new List<string>();
@@ -81,7 +86,9 @@ internal class RouteTemplate
         if (!string.IsNullOrEmpty(lastToken))
             tokens.Add(lastToken);
 
-        return (tokens, parameterNames);
+        return (
+            tokens.Select(x => new RouteTemplateToken(x, x.Count(y => y == '/'))).ToList(),
+            parameterNames);
     }
 }
 
